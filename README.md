@@ -12,8 +12,8 @@ Make sure you have the following installed on your local machine:
 
 ## Project Structure
 
-- **`docker-compose.yml`**: The Docker Compose configuration file that defines the services, including the MySQL database.
-- **`.env`**: Environment variables for configuring MySQL, such as database name, user, and passwords.
+- **`docker-compose.yml`**: The Docker Compose configuration file that defines the services, including the MySQL database and phpMyAdmin.
+- **`.env`**: Environment variables for configuring MySQL and phpMyAdmin, such as database name, user, passwords, and ports.
 - **`scripts/init.sql`**: SQL script that initializes the database, creates tables, and inserts initial data.
 - **`mysql_data/`**: A directory where the MySQL database files are stored. This directory is mounted as a volume in the container to persist data.
 - **`.env.sample`**: A sample environment file to provide an example of the required environment variables.
@@ -47,6 +47,7 @@ MYSQL_DATABASE=mydatabase
 MYSQL_ROOT_PASSWORD=
 MYSQL_USER=[user]
 MYSQL_PASSWORD=[password]
+PHPMYADMIN_PORT=8080
 ```
 
 ### 3. Start the Docker Compose Services
@@ -62,10 +63,20 @@ This command will:
 - Start a MySQL container with the specified environment variables.
 - Mount the `mysql_data/` directory to persist database data.
 - Run the `init.sql` script located in the `scripts/` directory to initialize the database, create tables, and insert initial data.
+- Start a phpMyAdmin container to manage your MySQL database through a web interface.
 
-### 4. Connect to MySQL
+### 4. Access phpMyAdmin
 
-Once the services are running, you can connect to the MySQL database using a MySQL client, or using [DBeaver](https://dbeaver.io/), following these connection settings:
+Once the services are running, you can access phpMyAdmin to manage your database via the browser:
+
+- **URL**: `http://localhost:8080`
+- **Server**: `db`
+- **Username**: `[user]`
+- **Password**: `[password]`
+
+### 5. Connect to MySQL
+
+You can also connect to the MySQL database using a MySQL client, or using [DBeaver](https://dbeaver.io/), following these connection settings:
 
 - **Host**: `localhost`
 - **Port**: `3306`
@@ -73,9 +84,9 @@ Once the services are running, you can connect to the MySQL database using a MyS
 - **Username**: `[user]`
 - **Password**: `[password]`
 
-### 5. Stopping the Services
+### 6. Stopping the Services
 
-To stop the MySQL container, run:
+To stop the MySQL and phpMyAdmin containers, run:
 
 ```bash
 docker-compose down
@@ -83,7 +94,7 @@ docker-compose down
 
 This will stop and remove the containers. The data will still be persisted in the `mysql_data/` directory.
 
-### 6. Cleaning Up
+### 7. Cleaning Up
 
 If you want to remove all containers and data, you can use the following command:
 
@@ -100,4 +111,4 @@ This command will remove the containers and the volume containing your database 
 
 ## License
 
-This project is licensed under the MIT License. 
+This project is licensed under the MIT License.
